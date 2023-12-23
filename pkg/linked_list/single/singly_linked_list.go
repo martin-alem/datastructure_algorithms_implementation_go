@@ -1,4 +1,4 @@
-package linked_list
+package single
 
 import "errors"
 
@@ -29,6 +29,20 @@ func Initialize[T any](list []T) *SinglyLinkedList[T] {
 	sl := New[T]()
 
 	for _, item := range list {
+		sl.Insert(item, false)
+	}
+
+	return sl
+}
+
+func Initializer[T any](elements ...T) *SinglyLinkedList[T] {
+	if len(elements) == 0 {
+		return New[T]()
+	}
+
+	sl := New[T]()
+
+	for _, item := range elements {
 		sl.Insert(item, false)
 	}
 
@@ -71,7 +85,10 @@ func (sl *SinglyLinkedList[T]) Remove(position int) (bool, error) {
 
 	if position == 0 {
 		sl.head = currentNode.next
-		currentNode.next = nil
+		if sl.head != nil {
+			currentNode.next = nil
+		}
+		sl.size -= 1
 		return true, nil
 	}
 
