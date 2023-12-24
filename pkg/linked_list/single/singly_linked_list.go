@@ -70,20 +70,19 @@ func (sl *SinglyLinkedList[T]) Insert(data T, front bool) {
 	sl.size += 1
 }
 
-func (sl *SinglyLinkedList[T]) Remove(position int) (bool, error) {
+func (sl *SinglyLinkedList[T]) Remove(index int) (bool, error) {
 	if sl.head == nil {
 		return false, errors.New("list is empty")
 	}
 
-	if position < 0 || position >= sl.size {
+	if index < 0 || index >= sl.size {
 		return false, errors.New("out of range")
 	}
 
-	counter := 0
 	currentNode := sl.head
 	var prevNode *node[T]
 
-	if position == 0 {
+	if index == 0 {
 		sl.head = currentNode.next
 		if sl.head != nil {
 			currentNode.next = nil
@@ -92,10 +91,9 @@ func (sl *SinglyLinkedList[T]) Remove(position int) (bool, error) {
 		return true, nil
 	}
 
-	for counter != position {
+	for i := 0; i < index; i++ {
 		prevNode = currentNode
 		currentNode = currentNode.next
-		counter += 1
 	}
 
 	prevNode.next = currentNode.next
@@ -109,21 +107,19 @@ func (sl *SinglyLinkedList[T]) Remove(position int) (bool, error) {
 	return true, nil
 }
 
-func (sl *SinglyLinkedList[T]) Get(position int) (T, error) {
+func (sl *SinglyLinkedList[T]) Get(index int) (T, error) {
 	if sl.head == nil {
 		return *new(T), errors.New("list is empty")
 	}
 
-	if position < 0 || position >= sl.size {
+	if index < 0 || index >= sl.size {
 		return *new(T), errors.New("out of range")
 	}
 
-	counter := 0
 	currentNode := sl.head
 
-	for counter != position {
+	for i := 0; i < index; i++ {
 		currentNode = currentNode.next
-		counter += 1
 	}
 
 	return currentNode.data, nil

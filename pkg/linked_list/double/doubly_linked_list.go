@@ -74,20 +74,19 @@ func (dl *DoublyLinkedList[T]) Insert(data T, front bool) {
 	dl.size += 1
 }
 
-func (dl *DoublyLinkedList[T]) Remove(position int) (bool, error) {
+func (dl *DoublyLinkedList[T]) Remove(index int) (bool, error) {
 	if dl.head == nil {
 		return false, errors.New("list is empty")
 	}
 
-	if position < 0 || position >= dl.size {
+	if index < 0 || index >= dl.size {
 		return false, errors.New("out of range")
 	}
 
-	counter := 0
 	currentNode := dl.head
 	var prevNode *node[T]
 
-	if position == 0 {
+	if index == 0 {
 		dl.head = currentNode.next
 		if dl.head != nil {
 			currentNode.next = nil
@@ -97,7 +96,7 @@ func (dl *DoublyLinkedList[T]) Remove(position int) (bool, error) {
 		return true, nil
 	}
 
-	if position == dl.size-1 {
+	if index == dl.size-1 {
 		currentNode = dl.tail
 		dl.tail = currentNode.prev
 		currentNode.prev = nil
@@ -105,10 +104,9 @@ func (dl *DoublyLinkedList[T]) Remove(position int) (bool, error) {
 		return true, nil
 	}
 
-	for counter != position {
+	for i := 0; i < index; i++ {
 		prevNode = currentNode
 		currentNode = currentNode.next
-		counter += 1
 	}
 
 	prevNode.next = currentNode.next
@@ -120,21 +118,19 @@ func (dl *DoublyLinkedList[T]) Remove(position int) (bool, error) {
 	return true, nil
 }
 
-func (dl *DoublyLinkedList[T]) Get(position int) (T, error) {
+func (dl *DoublyLinkedList[T]) Get(index int) (T, error) {
 	if dl.head == nil {
 		return *new(T), errors.New("list is empty")
 	}
 
-	if position < 0 || position >= dl.size {
+	if index < 0 || index >= dl.size {
 		return *new(T), errors.New("out of range")
 	}
 
-	counter := 0
 	currentNode := dl.head
 
-	for counter != position {
+	for i := 0; i < index; i++ {
 		currentNode = currentNode.next
-		counter += 1
 	}
 
 	return currentNode.data, nil
