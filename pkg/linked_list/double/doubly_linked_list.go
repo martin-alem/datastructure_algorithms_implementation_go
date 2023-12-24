@@ -22,30 +22,30 @@ func New[T any]() *DoublyLinkedList[T] {
 	}
 }
 
-func Initialize[T any](list []T) *DoublyLinkedList[T] {
+func Initialize[T any](list []T, front ...bool) *DoublyLinkedList[T] {
 	if len(list) == 0 {
 		return New[T]()
 	}
 
 	dl := New[T]()
 
+	if len(front) == 0 {
+		front = []bool{false}
+	}
+
 	for _, item := range list {
-		dl.Insert(item, false)
+		dl.Insert(item, front[0])
 	}
 
 	return dl
 }
 
-func Initializer[T any](elements ...T) *DoublyLinkedList[T] {
+func Initializer[T any](front bool, elements ...T) *DoublyLinkedList[T] {
 	if len(elements) == 0 {
 		return New[T]()
 	}
 
-	dl := New[T]()
-
-	for _, item := range elements {
-		dl.Insert(item, false)
-	}
+	dl := Initialize[T](elements, front)
 
 	return dl
 }

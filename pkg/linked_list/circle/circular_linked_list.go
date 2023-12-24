@@ -21,30 +21,30 @@ func New[T any]() *CircularLinkedList[T] {
 	}
 }
 
-func Initialize[T any](list []T) *CircularLinkedList[T] {
+func Initialize[T any](list []T, front ...bool) *CircularLinkedList[T] {
 	if len(list) == 0 {
 		return New[T]()
+	}
+
+	if len(front) == 0 {
+		front = []bool{false}
 	}
 
 	cl := New[T]()
 
 	for _, v := range list {
-		cl.Insert(v, false)
+		cl.Insert(v, front[0])
 	}
 
 	return cl
 }
 
-func Initializer[T any](elements ...T) *CircularLinkedList[T] {
+func Initializer[T any](front bool, elements ...T) *CircularLinkedList[T] {
 	if len(elements) == 0 {
 		return New[T]()
 	}
 
-	cl := New[T]()
-
-	for _, v := range elements {
-		cl.Insert(v, false)
-	}
+	cl := Initialize[T](elements, front)
 
 	return cl
 }

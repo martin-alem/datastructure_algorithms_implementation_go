@@ -29,9 +29,16 @@ func TestInitializeWithEmptySlice(t *testing.T) {
 }
 
 func TestInitializerWithArgs(t *testing.T) {
-	dl := double.Initializer(4, 5, 3, 4, 5, 3)
+	dl := double.Initializer(false, 4, 5, 3, 4, 5, 3)
 	if dl.GetSize() != 6 {
 		t.Errorf("Expected %d but got %d", 6, dl.GetSize())
+	}
+}
+
+func TestInitializerWithNoArgs(t *testing.T) {
+	dl := double.Initializer[int](false)
+	if dl.GetSize() != 0 {
+		t.Errorf("Expected %d but got %d", 0, dl.GetSize())
 	}
 }
 

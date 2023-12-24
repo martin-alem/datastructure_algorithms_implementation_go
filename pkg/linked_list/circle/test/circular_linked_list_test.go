@@ -29,9 +29,16 @@ func TestInitializeWithEmptySlice(t *testing.T) {
 }
 
 func TestInitializerWithArgs(t *testing.T) {
-	cl := circle.Initializer(4, 5, 3, 4, 5, 3)
+	cl := circle.Initializer(false, 4, 5, 3, 4, 5, 3)
 	if cl.GetSize() != 6 {
 		t.Errorf("Expected %d but got %d", 6, cl.GetSize())
+	}
+}
+
+func TestInitializerWithNoArgs(t *testing.T) {
+	cl := circle.Initializer[int](false)
+	if cl.GetSize() != 0 {
+		t.Errorf("Expected %d but got %d", 0, cl.GetSize())
 	}
 }
 

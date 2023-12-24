@@ -21,30 +21,29 @@ func New[T any]() *SinglyLinkedList[T] {
 	}
 }
 
-func Initialize[T any](list []T) *SinglyLinkedList[T] {
+func Initialize[T any](list []T, front ...bool) *SinglyLinkedList[T] {
 	if len(list) == 0 {
 		return New[T]()
 	}
 
+	if len(front) == 0 {
+		front = []bool{false}
+	}
 	sl := New[T]()
 
 	for _, item := range list {
-		sl.Insert(item, false)
+		sl.Insert(item, front[0])
 	}
 
 	return sl
 }
 
-func Initializer[T any](elements ...T) *SinglyLinkedList[T] {
+func Initializer[T any](front bool, elements ...T) *SinglyLinkedList[T] {
 	if len(elements) == 0 {
 		return New[T]()
 	}
 
-	sl := New[T]()
-
-	for _, item := range elements {
-		sl.Insert(item, false)
-	}
+	sl := Initialize[T](elements, front)
 
 	return sl
 }
